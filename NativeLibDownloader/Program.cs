@@ -60,6 +60,7 @@ namespace NativeLibDownloader
                 return 0;
             }
 
+            
             //Download all of our files
             Task<ConfigInfo[]> ret = ForEashAsync(configToDownload, DownloadFile);
 
@@ -139,6 +140,26 @@ namespace NativeLibDownloader
             string webUrl = Path.Combine(info.Site, info.Version, info.FileName);
             string localFileName = info.OutputLocation;
 
+            //Check for internet
+            bool haveInternet = false;
+
+            try
+            {
+                using (var client = new TimeoutWebClient(1000))
+                {
+                    using (var stream = client.OpenRead(webUrl))
+                    {
+                        haveInternet = true;
+                    }
+                }
+            }
+            catch
+            {
+                haveInternet = false;
+            }
+
+            if (!haveInternet) return info;
+
             try
             {
                 using (WebClient client = new WebClient())
@@ -151,6 +172,23 @@ namespace NativeLibDownloader
             catch (Exception)
             {
                 return info;
+            }
+        }
+
+        private class TimeoutWebClient : WebClient
+        {
+            private readonly int m_timeout;
+
+            public TimeoutWebClient(int timeout)
+            {
+                this.m_timeout = timeout;
+            }
+
+            protected override WebRequest GetWebRequest(Uri address)
+            {
+                var result = base.GetWebRequest(address);
+                result.Timeout = this.m_timeout;
+                return result;
             }
         }
     }
