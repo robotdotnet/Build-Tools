@@ -1,0 +1,23 @@
+[
+  {
+    "Version": "",
+    "Site": "",
+    "FileName": "",
+    "OutputLocation": "",
+    "MD5": ""
+  },
+  {
+    "Version": "",
+    "Site": "",
+    "FileName": "",
+    "OutputLocation": "",
+    "MD5": ""
+  },
+  {
+    "Version": "",
+    "Site": "",
+    "FileName": "",
+    "OutputLocation": "",
+    "MD5": ""
+  }
+]
