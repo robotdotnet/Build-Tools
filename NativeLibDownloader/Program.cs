@@ -44,6 +44,8 @@ namespace NativeLibDownloader
                 return 1;
             }
 
+            Directory.SetCurrentDirectory(Path.GetDirectoryName(args[0]));
+
             //Load our json
             List<ConfigInfo> configInfo = JsonConvert.DeserializeObject<List<ConfigInfo>>(File.ReadAllText(args[0]));
 
